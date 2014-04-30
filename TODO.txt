@@ -1,0 +1,28 @@
+- Add a POD section
+- Add an option for appending values found in the input but not in the -1/-2
+  files to the output
+- Use ISOLatin1Encoding
+ - Obviously, this will involve all input being converted to Latin-1 for
+   output.  If possible, input characters outside of the Latin-1 range should
+   be converted to the Latin-1 characters corresponding to the bytes of their
+   UTF-8 encoding (e.g., "α" becomes "Î±"); if this isn't possible, non-Latin-1
+   input characters should be a fatal error.
+- Use accurate widths for the row/column labels
+ - Have binheat.pl construct a short PostScript program that calculates the
+   maximum lengths of the row labels & column labels in the given font and
+   outputs them, then pipe this program through a PostScript instance before
+   outputting any of the actual PostScript output so that proper dimensions for
+   the main output can be calculated.
+ - The program through which binheat.pl pipes the intermediate program should
+   be configurable, with an empty or undefined value causing it to revert back
+   to guessing "length * em" for the widths.
+ - Alternatively (or alongside the above, enabled by a switch?), binheat.pl
+   could just use the "length * em" method for determining the dimensions of
+   the EPS file, and then said file could go through the calculations itself to
+   properly typeset everything in the center of the page.
+- Improve handling of empty fields
+ - Currently, binheat.pl will ignore a line of the form "label<TAB><EOL>" but
+   will treat a line of the form "<TAB>label<EOL>" as denoting a relationship
+   from an empty label to "label".  Either eliminate the latter behavior or
+   treat lines with a single label as just establishing that the label exists
+   (meaningful only when -S is in effect).
