@@ -1,13 +1,4 @@
 #!/usr/bin/perl -w
-# Options:
-#   -1 file - list of all values for the first column in display order
-#   -2 file - list of all values for the second column in display order
-#   -T - use the first column for the top edge of the chart and the second
-#        column for the left edge rather than the other way around
-#   -S - display values in the order in which they appear in the input file
-#        rather than sorted lexically (overridden by -1 and -2 options)
-#   -m - allow "foo\tbar\tbaz\tglarch\n" as shorthand for
-#        "\foo\tbar\nfoo\tbaz\nfoo\tglarch\n"
 use strict;
 use Getopt::Std;
 
@@ -144,3 +135,82 @@ sub pushPair($$) {
   if $opts{S} && !defined $opts{1} && !exists $lefts{$left};
  $tops{$top} = $cols++ if $opts{S} && !defined $opts{2} && !exists $tops{$top};
 }
+
+__END__
+
+=pod
+
+=head1 NAME
+
+B<binheat> - binary heat map generator
+
+=head1 SYNOPSIS
+
+B<binheat> [B<-1> I<file>] [B<-2> I<file>] [B<-mST>] [I<infile>]
+
+=head1 DESCRIPTION
+
+B<binheat> converts a description of a binary relation into an Embedded
+PostScript image of the relation as a binary heat map (a.k.a. matrix display,
+adjacency matrix, comparison chart, and probably a bunch of other names as
+well).  I<infile> (or standard input if no file is specified) must list the
+elements of the relation, one per line, each line consisting of two labels
+(nonempty nontab character sequences) separated by one or more tabs.  (The
+input may also contain comment lines in which the first nonwhitespace character
+is C<#>.)  B<binheat> will then print an EPS file to standard output showing a
+table in which the labels from the first column of each line are lexically
+sorted along the left edge, the labels from the second column are lexically
+sorted along the top edge, and dots are placed in the cells of the table to
+represent the elements of the relation.
+
+=head1 OPTIONS
+
+=over
+
+=item B<-1> I<file>
+
+The lines of I<file> will taken as a list of all labels appearing in the first
+column of the input file, and the labels along the left edge of the output
+chart (or the top edge if B<-T> is in effect) will be in the same order that
+they are listed in I<file>.  Labels that appear in I<file> but not the first
+column of the input file will appear in the output with no relations, and
+labels that appear in the first column of the input file but not I<file> will
+not appear in the output at all.
+
+This option overrides the B<-S> option for the first column only.
+
+=item B<-2> I<file>
+
+The lines of I<file> will taken as a list of all labels appearing in the second
+column of the input file, and the labels along the top edge of the output chart
+(or the left edge if B<-T> is in effect) will be in the same order that they
+are listed in I<file>.  Labels that appear in I<file> but not the second column
+of the input file will appear in the output with no relations, and labels that
+appear in the second column of the input file but not I<file> will not appear
+in the output at all.
+
+This option overrides the B<-S> option for the second column only.
+
+=item B<-m>
+
+C<< foo<TAB>bar<TAB>baz >> (or any number of tab-separated fields) will be
+allowed as an abbreviation for C<< foo<TAB>bar >> followed by C<< foo<TAB>baz
+>> etc.
+
+=item B<-S>
+
+Labels in the output will be listed in the order in which they appear in the
+input file rather than in lexical order
+
+=item B<-T>
+
+The output will be transposed -- i.e., the first column will be used for the
+top edge of the chart and the second column for the left edge
+
+=back
+
+=head1 AUTHOR
+
+John T. Wodder II <jwodder@sdf.lonestar.org>
+
+=cut

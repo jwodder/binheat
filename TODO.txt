@@ -1,4 +1,3 @@
-- Add a POD section
 - Add an option for appending values found in the input but not in the -1/-2
   files to the output
 - Use ISOLatin1Encoding
@@ -26,3 +25,9 @@
    from an empty label to "label".  Either eliminate the latter behavior or
    treat lines with a single label as just establishing that the label exists
    (meaningful only when -S is in effect).
+- Add an option for setting the font?
+- Add an option for emitting a warning when a field not in a supplied -1/-2
+  file is encountered
+- Add a way to specify the outfile (either with an -o option or by naming it
+  after the infile on the command line)
+- Support comments at the end of nonempty lines?
