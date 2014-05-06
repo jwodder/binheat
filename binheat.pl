@@ -169,11 +169,11 @@ represent the elements of the relation.
 
 =item B<-1> I<file>
 
-The lines of I<file> will taken as a list of all labels appearing in the first
-column of the input file, and the labels along the left edge of the output
-chart (or the top edge if B<-T> is in effect) will be in the same order that
-they are listed in I<file>.  Labels that appear in I<file> but not the first
-column of the input file will appear in the output with no relations, and
+The lines of I<file> will be taken as a list of all labels appearing in the
+first column of the input file, and the labels along the left edge of the
+output chart (or the top edge if B<-T> is in effect) will be in the same order
+that they are listed in I<file>.  Labels that appear in I<file> but not the
+first column of the input file will appear in the output with no relations, and
 labels that appear in the first column of the input file but not I<file> will
 not appear in the output at all.
 
@@ -181,13 +181,13 @@ This option overrides the B<-S> option for the first column only.
 
 =item B<-2> I<file>
 
-The lines of I<file> will taken as a list of all labels appearing in the second
-column of the input file, and the labels along the top edge of the output chart
-(or the left edge if B<-T> is in effect) will be in the same order that they
-are listed in I<file>.  Labels that appear in I<file> but not the second column
-of the input file will appear in the output with no relations, and labels that
-appear in the second column of the input file but not I<file> will not appear
-in the output at all.
+The lines of I<file> will be taken as a list of all labels appearing in the
+second column of the input file, and the labels along the top edge of the
+output chart (or the left edge if B<-T> is in effect) will be in the same order
+that they are listed in I<file>.  Labels that appear in I<file> but not the
+second column of the input file will appear in the output with no relations,
+and labels that appear in the second column of the input file but not I<file>
+will not appear in the output at all.
 
 This option overrides the B<-S> option for the second column only.
 
