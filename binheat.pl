@@ -20,7 +20,14 @@ my($rows, $cols) = (0, 0);
 $rows = readList $opts{1}, %lefts if defined $opts{1};
 $cols = readList $opts{2}, %tops  if defined $opts{2};
 
-while (<>) {
+my($in, $out) = (*STDIN, *STDOUT);
+my $infile = shift || '-';
+my $outfile = shift || '-';
+open $in,  '<', $infile  or die "$0: $infile: $!"  unless $infile  eq '-';
+open $out, '>', $outfile or die "$0: $outfile: $!" unless $outfile eq '-';
+select $out;
+
+while (<$in>) {
  chomp;
  s/\s+$//;
  next if /^$/ || /^\s*#/;
@@ -114,11 +121,11 @@ sub maximum(@) {
 
 sub readList($\%) {
  my($file, $hash) = @_;
- my $in;
- if ($file eq '-') { $in = *STDIN }
- else { open $in, '<', $file or die "$0: $file: $!" }
+ my $fp;
+ if ($file eq '-') { $fp = *STDIN }
+ else { open $fp, '<', $file or die "$0: $file: $!" }
  my $i = 0;
- while (<$in>) {
+ while (<$fp>) {
   chomp;
   s/\s+$//;
   next if /^$/ || /^\s*#/;
@@ -146,7 +153,7 @@ B<binheat> - binary heat map generator
 
 =head1 SYNOPSIS
 
-B<binheat> [B<-1> I<file>] [B<-2> I<file>] [B<-mST>] [I<infile>]
+B<binheat> [B<-1> I<file>] [B<-2> I<file>] [B<-mST>] [I<infile> [I<outfile>]]
 
 =head1 DESCRIPTION
 
@@ -157,11 +164,11 @@ well).  I<infile> (or standard input if no file is specified) must list the
 elements of the relation, one per line, each line consisting of two labels
 (nonempty nontab character sequences) separated by one or more tabs.  (The
 input may also contain comment lines in which the first nonwhitespace character
-is C<#>.)  B<binheat> will then print an EPS file to standard output showing a
-table in which the labels from the first column of each line are lexically
-sorted along the left edge, the labels from the second column are lexically
-sorted along the top edge, and dots are placed in the cells of the table to
-represent the elements of the relation.
+is C<#>.)  B<binheat> will then print an EPS file to I<outfile> (or standard
+output if no file is specified) showing a table in which the labels from the
+first column of each line are lexically sorted along the left edge, the labels
+from the second column are lexically sorted along the top edge, and dots are
+placed in the cells of the table to represent the elements of the relation.
 
 =head1 OPTIONS
 

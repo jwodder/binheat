@@ -28,6 +28,4 @@
 - Add an option for setting the font?
 - Add an option for emitting a warning when a field not in a supplied -1/-2
   file is encountered
-- Add a way to specify the outfile (either with an -o option or by naming it
-  after the infile on the command line)
 - Support comments at the end of nonempty lines?
