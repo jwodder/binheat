@@ -5,6 +5,7 @@ use Getopt::Std;
 sub maximum(@);
 sub readList($\%);
 sub pushPair($$);
+sub psify($);
 
 my $font = 'Times-Roman';
 my $fontsize = 12;
@@ -50,6 +51,7 @@ if (!$opts{S}) {
  }
 }
 
+### TODO: These guesses should use the lengths of the Latin-1 encoded labels.
 my $leftlen = maximum(map length, keys %lefts) * $em * $fontsize;
 my $toplen  = maximum(map length, keys %tops)  * $em * $fontsize;
 
@@ -59,8 +61,16 @@ my $maxx = $cols * $fontsize * 1.2;
 print <<EOT;
 %!PS-Adobe-3.0 EPSF-3.0
 %%BoundingBox: -@{[$leftlen+$padding]} -@{[$miny+$padding]} @{[$maxx+$padding]} @{[$toplen+$padding]}
+
+/mkLatin1 {  % old font, new name -- new font
+ exch dup length dict begin
+ { 1 index /FID ne { def } { pop pop } ifelse } forall
+ /Encoding ISOLatin1Encoding def
+ currentdict end definefont
+} def
+
 /fontsize $fontsize def
-/$font findfont fontsize scalefont setfont
+/$font findfont /binheat-font mkLatin1 fontsize scalefont setfont
 /lineheight fontsize 1.2 mul def
 /radius lineheight 3 div def
 
@@ -86,7 +96,7 @@ newpath -$leftlen 0 moveto $maxx  0 lineto stroke
 EOT
 
 while (my($key, $i) = each %lefts) {
- (my $left = $key) =~ s/([(\\)])/\\$1/g;
+ my $left = psify $key;
  print <<EOT;
 ($left) dup stringwidth pop neg $linepad sub
 $i 1 add lineheight mul neg fontsize 3 div add
@@ -96,7 +106,7 @@ EOT
 }
 
 while (my($key, $i) = each %tops) {
- (my $top = $key) =~ s/([(\\)])/\\$1/g;
+ my $top = psify $key;
  print <<EOT;
 gsave
 $i 1 add lineheight mul 0 translate 90 rotate $linepad fontsize 3 div moveto
@@ -141,6 +151,17 @@ sub pushPair($$) {
  $lefts{$left} = $rows++
   if $opts{S} && !defined $opts{1} && !exists $lefts{$left};
  $tops{$top} = $cols++ if $opts{S} && !defined $opts{2} && !exists $tops{$top};
+}
+
+sub psify($) {
+ my $str = shift;
+ $str =~ s/([(\\)])/\\$1/g;
+ $str =~ s/([\xC0-\xDF])([\x80-\xBF])/
+  my $x = (ord($1) & 0x1F) << 6 | (ord($2) & 0x3F);
+  $x < 256 ? sprintf("\\%03o", $x) : sprintf("\\%03o\\%03o", ord $1, ord $2);
+ /ge;
+ $str =~ s/([^\x00-\x7E])/sprintf "\\%03o", ord $1/ge;
+ return $str;
 }
 
 __END__
@@ -215,6 +236,15 @@ The output will be transposed -- i.e., the first column will be used for the
 top edge of the chart and the second column for the left edge
 
 =back
+
+=head1 RESTRICTIONS
+
+B<binheat> only accepts input in the UTF-8 and ISO-8859-1 ("Latin-1")
+encodings, and Latin-1 that looks like UTF-8 (even in part) will confuse it.
+More importantly, B<binheat> can only display characters in the Latin-1 range;
+anything beyond that will be represented by the Latin-1 interpretation of the
+character's UTF-8 encoding.  (For example, a "é" in the input will remain a "é"
+in the output, but "α" will become "Î±".)
 
 =head1 AUTHOR
 
