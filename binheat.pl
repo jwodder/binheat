@@ -9,7 +9,7 @@ sub psify($);
 
 my $font = 'Times-Roman';
 my $fontsize = 12;
-my $em = 0.6;  # expected em-to-font-size ratio
+my $em = 0.7;  # expected em-to-font-size ratio
 my $padding = 5;
 my $linepad = 2.5;
 
