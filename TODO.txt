@@ -25,3 +25,4 @@
 - Support comments at the ends of nonempty lines?
 - Add more example input files
 - Should the -m option always be in effect?
+- Add a link to the repository to the documentation
