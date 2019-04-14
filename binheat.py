@@ -7,7 +7,7 @@ from   reportlab.pdfgen.canvas   import Canvas
 
 EM = 0.7  # expected em-to-font-size ratio
 PADDING = 5
-LINEPAD = 2.5
+LABEL_PAD = 2.5
 
 COL_BG_COLOR = (0.8, 0.8, 0.8)
 ROW_BG_COLOR = (1, 1, 0.5)
@@ -94,23 +94,17 @@ class BinHeat:
             }
 
     def render(self, outfile, font_name, font_size):
-        ### TODO: Use canvas.stringWidth() here instead:
-        leftlen = max(map(len, self.row_labels)) * EM * font_size
-        toplen  = max(map(len, self.column_labels)) * EM * font_size
-
+        c = Canvas(outfile)
+        c.setFont(font_name, font_size)
+        leftlen = max(map(c.stringWidth, self.row_labels)) + LABEL_PAD * 2
+        toplen  = max(map(c.stringWidth, self.column_labels)) + LABEL_PAD * 2
         miny = self.rows * font_size * 1.2
         maxx = self.columns * font_size * 1.2
-
-        c = Canvas(
-            outfile,
-            (leftlen + maxx + PADDING * 2, miny + toplen + PADDING * 2),
-        )
+        c.setPageSize((leftlen + maxx + PADDING*2, miny + toplen + PADDING*2))
         # Set coordinates so that LL corner has coord (-leftlen-PADDING,
         # -miny-PADDING) and the origin is at the point where the borders of the
         # row & column labels meet:
         c.translate(leftlen+PADDING, miny+PADDING)
-
-        c.setFont(font_name, font_size)
 
         lineheight = font_size * 1.2
         radius = lineheight / 3
@@ -128,8 +122,8 @@ class BinHeat:
 
         c.setFillColorRGB(*ROW_BG_COLOR)
         for i in range(2, self.rows+1, 2):
-            # Yes, it starts at 2, so that the positive rectangle height will make
-            # it fill row 1.
+            # Yes, it starts at 2, so that the positive rectangle height will
+            # make it fill row 1.
             c.rect(
                 -leftlen,
                 -i * lineheight,
@@ -144,9 +138,8 @@ class BinHeat:
         c.line(-leftlen, 0, maxx, 0)
 
         for i, label in enumerate(self.row_labels):
-            ### TODO: Replace with drawRightString()?
-            c.drawString(
-                -c.stringWidth(label) - LINEPAD,
+            c.drawRightString(
+                -LABEL_PAD,
                 -(i+1) * lineheight + font_size / 3,
                 label,
             )
@@ -155,7 +148,7 @@ class BinHeat:
             c.saveState()
             c.translate((i+1) * lineheight, 0)
             c.rotate(90)
-            c.drawString(LINEPAD, font_size / 3, label)
+            c.drawString(LABEL_PAD, font_size / 3, label)
             c.restoreState()
 
         for row, col in self.get_indexed_pairs():

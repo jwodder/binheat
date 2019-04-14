@@ -3,9 +3,6 @@
     - When sorting with this option on, the resulting sequence of labels should
       be the labels in -1/-2 in the same order followed by the extra labels
       sorted
-- Use accurate widths for the row/column labels
-    - Use `canvas.stringWidth()` to calculate the maximum label lengths before
-      setting the page size
 - Improve handling of empty fields
     - Currently, `binheat.py` will ignore a line of the form "`label<TAB><EOL>`"
       but will treat a line of the form "`<TAB>label<EOL>`" as denoting a
@@ -29,4 +26,5 @@
   filename with the extension set to `.pdf` instead of to stdout
 - Implement the drawing logic as a `reportlab.*.Flowable` subclass (or factory
   thereof?)
+- Add docstrings
 - Package and release on PyPI
