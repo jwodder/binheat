@@ -2,7 +2,8 @@
 """
 Binary heat map generator
 
-Visit <https://github.com/jwodder/binheat> for more information.
+Run ``binheat --help`` or visit <https://github.com/jwodder/binheat> for more
+information.
 """
 
 __version__      = '0.1.0.dev1'
@@ -17,12 +18,17 @@ from   reportlab.pdfbase         import pdfmetrics
 from   reportlab.pdfbase.ttfonts import TTFont
 from   reportlab.pdfgen.canvas   import Canvas
 
-EM = 0.7  # expected em-to-font-size ratio
+#: Padding (in points) around the edge of the rendered binary heat map
 PADDING = 5
+
+#: Padding (in points) at the beginning & ending of the row & column labels
 LABEL_PAD = 2.5
 
-COL_BG_COLOR = (0.8, 0.8, 0.8)
-ROW_BG_COLOR = (1, 1, 0.5)
+#: Color to use to highlight alternating columns
+COL_BG_COLOR = (0.8, 0.8, 0.8)  # grey
+
+#: Color to use to highlight alternating rows
+ROW_BG_COLOR = (1, 1, 0.5)  # light yellow
 
 class BinHeat:
     def __init__(self, allow_extra=False):
@@ -30,13 +36,25 @@ class BinHeat:
         #: unknown label.  Only has an effect when
         #: `set_row_labels()`/`set_column_labels()` has been called.
         self.allow_extra = allow_extra
+        #: Whether `set_row_labels()` has been called
         self.row_labels_set = False
+        #: Whether `set_column_labels()` has been called
         self.column_labels_set = False
+        #: Mapping from row labels to their indices when listed
         self.rows2indices = {}
+        #: Mapping from column labels to their indices when listed
         self.columns2indices = {}
+        #: Set of ``(row label, column label)`` pairs
         self.pairs = set()
 
     def set_row_labels(self, labels):
+        """
+        Set the row labels to the given sequence of strings in the order given
+
+        :param labels: an iterable of strings to set the row labels to
+        :raises RuntimeError: if called more than once or after calling
+            `add_pair()`
+        """
         if self.row_labels_set:
             raise RuntimeError('set_row_labels() called more than once')
         elif self.pairs:
@@ -46,6 +64,14 @@ class BinHeat:
         self.rows2indices = {l:i for i,l in enumerate(labels)}
 
     def set_column_labels(self, labels):
+        """
+        Set the column labels to the given sequence of strings in the order
+        given
+
+        :param labels: an iterable of strings to set the column labels to
+        :raises RuntimeError: if called more than once or after calling
+            `add_pair()`
+        """
         if self.column_labels_set:
             raise RuntimeError('set_column_labels() called more than once')
         elif self.pairs:
@@ -55,6 +81,15 @@ class BinHeat:
         self.columns2indices = {l:i for i,l in enumerate(labels)}
 
     def add_pair(self, row, column):
+        """
+        Register a pairing of the given row and column.  If `allow_extra` is
+        false and either component does not appear in a prespecified label set,
+        the pair is discarded.  If `allow_extra` is true, new row or column
+        labels are appended to the list of all row/column labels.
+
+        :param str row: the label of the row of this point
+        :param str column: the label of the column of this point
+        """
         if not self.allow_extra:
             if self.row_labels_set and row not in self.rows2indices:
                 return
@@ -78,6 +113,7 @@ class BinHeat:
 
     @property
     def row_labels(self):
+        """ A list of all row labels in the binary heat map in display order """
         return sorted(
             self.rows2indices.keys(),
             key=self.rows2indices.__getitem__,
@@ -85,16 +121,28 @@ class BinHeat:
 
     @property
     def column_labels(self):
+        """
+        A list of all column labels in the binary heat map in display order
+        """
         return sorted(
             self.columns2indices.keys(),
             key=self.columns2indices.__getitem__,
         )
 
     def get_indexed_pairs(self):
+        """
+        Yield all pairs in the binary heat map in unspecified order, with each
+        pair represented as a pairing of its row's index and its column's index
+        """
         for r,c in self.pairs:
             yield (self.rows2indices[r], self.columns2indices[c])
 
     def sort_labels(self):
+        """
+        If `set_row_labels()` has not been called, reorder (and reindex) the
+        row labels to be in lexicographic order.  Likewise for
+        `set_column_labels()` and the column labels.
+        """
         ### TODO: Take allow_extra into account when *_labels_set
         if not self.row_labels_set:
             self.rows2indices = {
@@ -106,6 +154,11 @@ class BinHeat:
             }
 
     def render(self, outfile, font_name, font_size):
+        """
+        Render the binary heat map as a PDF to the file-like object or filename
+        ``outfile``.  All text will be typeset in the font named ``font_name``
+        at size ``font_size``.
+        """
         c = Canvas(outfile)
         c.setFont(font_name, font_size)
         leftlen = max(map(c.stringWidth, self.row_labels)) + LABEL_PAD * 2
@@ -177,21 +230,31 @@ class BinHeat:
 
 
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
+@click.option('-C', '--column-labels', type=click.File(),
+              help='Use lines in given file as column labels')
 @click.option('-F', '--font', metavar='TTF_FILE',
               help='Typeset text in given font')
 @click.option('-f', '--font-size', type=float, default=12, show_default=True,
-              help='Size of normal text')
-@click.option('-T', '--transpose', is_flag=True)
-@click.option('-m', '--multiline', is_flag=True)
-@click.option('-S', '--no-sort', is_flag=True)
-@click.option('-1', '--left-labels', type=click.File())
-@click.option('-2', '--top-labels', type=click.File())
+              help='Typeset text at given size')
+@click.option('-m', '--multiline', is_flag=True,
+              help='Allow multiple column specifiers in a single input line')
+@click.option('-R', '--row-labels', type=click.File(),
+              help='Use lines in given file as row labels')
+@click.option('-S', '--no-sort', is_flag=True,
+              help='Do not sort the row & column labels')
+@click.option('-T', '--transpose', is_flag=True,
+              help='Exchange rows with columns')
 @click.version_option(__version__, '-V', '--version',
                       message='binheat %(version)s')
 @click.argument('infile', type=click.File(), default='-')
 @click.argument('outfile', type=click.File('wb'), default='-')
 def main(infile, outfile, font, font_size, transpose, multiline, no_sort,
-         left_labels, top_labels):
+         row_labels, column_labels):
+    """
+    Binary heat map generator
+
+    Visit <https://github.com/jwodder/binheat> for more information.
+    """
     if font is not None:
         font_name = 'CustomFont'
         ### TODO: Use the basename of the filename as the font name?  (Could
@@ -203,11 +266,11 @@ def main(infile, outfile, font, font_size, transpose, multiline, no_sort,
     bh = BinHeat()
 
     if transpose:
-        left_labels, top_labels = top_labels, left_labels
-    if left_labels:
-        bh.set_row_labels(strip_read(left_labels))
-    if top_labels:
-        bh.set_column_labels(strip_read(top_labels))
+        row_labels, column_labels = column_labels, row_labels
+    if row_labels:
+        bh.set_row_labels(strip_read(row_labels))
+    if column_labels:
+        bh.set_column_labels(strip_read(column_labels))
 
     for line in strip_read(infile):
         left, *top = re.split(r'\t+', line)

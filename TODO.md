@@ -26,6 +26,5 @@
   filename with the extension set to `.pdf` instead of to stdout
 - Implement the drawing logic as a `reportlab.*.Flowable` subclass (or factory
   thereof?)
-- Add docstrings
-- Add `--help` output
+- Expand module docstring and `main()` docstring
 - Release on PyPI
