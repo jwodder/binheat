@@ -1,5 +1,0 @@
-# A demonstration of binheat.pl's handling of non-ASCII characters
-Plain old ASCII				Pure ASCII
-Special characters: \( () \101\\ )\	Pure ASCII
-Latin-1 characters (in UTF-8): áéíóúý	Latin-1
-Characters beyond Latin-1: α — ಠ_ಠ ☃	Mangled
