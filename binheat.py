@@ -186,6 +186,8 @@ class BinHeat:
 @click.option('-S', '--no-sort', is_flag=True)
 @click.option('-1', '--left-labels', type=click.File())
 @click.option('-2', '--top-labels', type=click.File())
+@click.version_option(__version__, '-V', '--version',
+                      message='binheat %(version)s')
 @click.argument('infile', type=click.File(), default='-')
 @click.argument('outfile', type=click.File('wb'), default='-')
 def main(infile, outfile, font, font_size, transpose, multiline, no_sort,

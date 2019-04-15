@@ -27,4 +27,5 @@
 - Implement the drawing logic as a `reportlab.*.Flowable` subclass (or factory
   thereof?)
 - Add docstrings
+- Add `--help` output
 - Release on PyPI
