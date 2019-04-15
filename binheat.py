@@ -1,4 +1,16 @@
 #!/usr/bin/python3
+"""
+Binary heat map generator
+
+Visit <https://github.com/jwodder/binheat> for more information.
+"""
+
+__version__      = '0.1.0.dev1'
+__author__       = 'John Thorvald Wodder II'
+__author_email__ = 'binheat@varonathe.org'
+__license__      = 'MIT'
+__url__          = 'https://github.com/jwodder/binheat'
+
 import re
 import click
 from   reportlab.pdfbase         import pdfmetrics
