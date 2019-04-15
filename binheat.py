@@ -2,6 +2,21 @@
 """
 Binary heat map generator
 
+``binheat`` converts a description of a binary relation into a PDF image of the
+relation as a binary heat map (a.k.a. matrix display, adjacency matrix,
+comparison chart, and probably a bunch of other names as well).
+
+Each line of the input (except for blank lines and comments, which are ignored)
+must be of the form ``x<TAB>y``, denoting a pair ``(x, y)`` in the binary
+relation.  If the ``--multiline`` option is given, an input line may instead
+contain multiple tab-separated fields; ``x<TAB>a<TAB>b<TAB>c`` is then short
+for ``x<TAB>a``, ``x<TAB>b``, and ``x<TAB>c``.
+
+In the output table, the values from the first column of each input line become
+the labels of the table's rows, and the values from the second input column
+onwards become the labels of the table's columns.  This can be reversed with
+the ``--transpose`` option.
+
 Run ``binheat --help`` or visit <https://github.com/jwodder/binheat> for more
 information.
 """
@@ -252,6 +267,21 @@ def main(infile, outfile, font, font_size, transpose, multiline, no_sort,
          row_labels, column_labels):
     """
     Binary heat map generator
+
+    ``binheat`` converts a description of a binary relation into a PDF image of
+    the relation as a binary heat map (a.k.a. matrix display, adjacency matrix,
+    comparison chart, and probably a bunch of other names as well).
+
+    Each line of the input (except for blank lines and comments, which are
+    ignored) must be of the form ``x<TAB>y``, denoting a pair ``(x, y)`` in the
+    binary relation.  If the ``--multiline`` option is given, an input line may
+    instead contain multiple tab-separated fields; ``x<TAB>a<TAB>b<TAB>c`` is
+    then short for ``x<TAB>a``, ``x<TAB>b``, and ``x<TAB>c``.
+
+    In the output table, the values from the first column of each input line
+    become the labels of the table's rows, and the values from the second input
+    column onwards become the labels of the table's columns.  This can be
+    reversed with the ``--transpose`` option.
 
     Visit <https://github.com/jwodder/binheat> for more information.
     """

@@ -19,15 +19,19 @@
 
 ``binheat`` converts a description of a binary relation into a PDF image of the
 relation as a binary heat map (a.k.a. matrix display, adjacency matrix,
-comparison chart, and probably a bunch of other names as well).  The input must
-list the elements of the relation, one per line, each line consisting of two
-labels (nonempty nontab character sequences) separated by one or more tabs.
-(The input may also contain comment lines in which the first nonwhitespace
-character is ``#``.)  ``binheat`` will then render a PDF file showing a table
-in which the labels from the first column of each line are lexically sorted
-along the left edge, the labels from the second column are lexically sorted
-along the top edge, and dots are placed in the cells of the table to represent
-the elements of the relation.
+comparison chart, and probably a bunch of other names as well; see below for an
+example).
+
+Each line of the input (except for blank lines and comments, which are ignored)
+must be of the form ``x<TAB>y``, denoting a pair ``(x, y)`` in the binary
+relation.  If the ``--multiline`` option is given, an input line may instead
+contain multiple tab-separated fields; ``x<TAB>a<TAB>b<TAB>c`` is then short
+for ``x<TAB>a``, ``x<TAB>b``, and ``x<TAB>c``.
+
+In the output table, the values from the first column of each input line become
+the labels of the table's rows, and the values from the second input column
+onwards become the labels of the table's columns.  This can be reversed with
+the ``--transpose`` option.
 
 
 Installation
@@ -54,16 +58,10 @@ file is specified).
 Options
 -------
 
-- ``-C <file>``, ``--column-labels <file>`` — The lines of ``<file>`` will be
-  taken as a list of all labels appearing in the second column of the input
-  file, and the labels along the top edge of the output chart (or the left edge
-  if ``--transpose`` is in effect) will be in the same order that they are
-  listed in ``<file>``.  Labels that appear in ``<file>`` but not the second
-  column of the input file will appear in the output with no relations, and
-  labels that appear in the second column of the input file but not ``<file>``
-  will not appear in the output at all.
-
-  This option overrides the ``--no-sort`` option for the second column only.
+- ``-C <file>``, ``--column-labels <file>`` — Use the lines in ``<file>``
+  (after discarding blank lines & comments) in the order they appear as column
+  labels (or row labels if ``--transpose`` is in effect).  Any pairs in the
+  input whose second column does not appear in ``<file>`` are discarded.
 
 - ``-F <ttf-file>``, ``--font <ttf-file>`` — Use the given ``.ttf`` file for
   the text font.  By default, all text is typeset in Times-Roman.
@@ -75,23 +73,17 @@ Options
   tab-separated fields) will be allowed as an abbreviation for ``foo<TAB>bar``
   followed by ``foo<TAB>baz`` etc.
 
-- ``-R <file>``, ``--row-labels <file>`` — The lines of ``<file>`` will be
-  taken as a list of all labels appearing in the first column of the input
-  file, and the labels along the left edge of the output chart (or the top edge
-  if ``--transpose`` is in effect) will be in the same order that they are
-  listed in ``<file>``.  Labels that appear in ``<file>`` but not the first
-  column of the input file will appear in the output with no relations, and
-  labels that appear in the first column of the input file but not ``<file>``
-  will not appear in the output at all.
-
-  This option overrides the ``--no-sort`` option for the first column only.
+- ``-R <file>``, ``--row-labels <file>`` — Use the lines in ``<file>`` (after
+  discarding blank lines & comments) in the order they appear as row labels (or
+  column labels if ``--transpose`` is in effect).  Any pairs in the input whose
+  first column does not appear in ``<file>`` are discarded.
 
 - ``-S``, ``--no-sort`` — Labels in the output will be listed in the order in
   which they appear in the input file rather than in lexical order
 
 - ``-T``, ``--transpose`` — The output will be transposed — i.e., the first
-  column will be used for the top edge of the chart and the second column for
-  the left edge.
+  column of the input will be used for the output table's column labels, and
+  the second input column onwards will be used for the table's row labels.
 
 
 Example
