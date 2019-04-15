@@ -1,14 +1,14 @@
-<NUL> (\0, 0x00)	iscntrl
+NUL (\0, 0x00)	iscntrl
 0x01..0x06		iscntrl
-<BEL> (\a, 0x07)	iscntrl
-<BS> (\b, 0x08)		iscntrl
-<TAB> (\t, 0x09)	iscntrl	isspace	isblank
-<LF> (\n, 0x0A)		iscntrl	isspace
-<VT> (\v, 0x0B)		iscntrl	isspace
-<FF> (\f, 0x0C)		iscntrl	isspace
-<CR> (\r, 0x0D)		iscntrl	isspace
+BEL (\a, 0x07)	iscntrl
+BS (\b, 0x08)		iscntrl
+TAB (\t, 0x09)	iscntrl	isspace	isblank
+LF (\n, 0x0A)		iscntrl	isspace
+VT (\v, 0x0B)		iscntrl	isspace
+FF (\f, 0x0C)		iscntrl	isspace
+CR (\r, 0x0D)		iscntrl	isspace
 0x0E..0x1F		iscntrl
-<SPACE> (0x20)		isprint	isspace	isblank
+SPACE (0x20)		isprint	isspace	isblank
 !"#$%&'()*+,-./		isprint	isgraph	ispunct
 0123456789		isprint	isgraph	isalnum	isdigit	isxdigit
 :;<=>?@			isprint	isgraph	ispunct
@@ -18,4 +18,4 @@ GHIJKLMNOPQRSTUVWXYZ	isprint	isgraph	isalnum	isalpha	isupper
 abcdef			isprint	isgraph	isalnum	isalpha	islower	isxdigit
 ghijklmnopqrstuvwxyz	isprint	isgraph	isalnum	isalpha	islower
 {|}~			isprint	isgraph	ispunct
-<DEL> (0x7F)		iscntrl
+DEL (0x7F)		iscntrl

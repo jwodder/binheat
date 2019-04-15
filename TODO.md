@@ -15,10 +15,6 @@
 - Add more example input files
 - Should the `-m` option always be in effect?
 - Make `--no-sort` the default behavior and add a `--sort` option
-- Convert `binheat.pod` to a `README.rst`
-    - Add a link to the repository to the documentation
-    - Rewrite RESTRICTIONS section to address some characters not being
-      available in selected fonts
 - Support specifying builtin fonts with `--font` (The available builtin fonts
   can be listed with `Canvas(*).getAvailableFonts()`)
 - Make the margins configurable on the command line?
