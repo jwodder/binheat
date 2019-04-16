@@ -21,7 +21,7 @@ Run ``binheat --help`` or visit <https://github.com/jwodder/binheat> for more
 information.
 """
 
-__version__      = '0.1.0'
+__version__      = '0.2.0.dev1'
 __author__       = 'John Thorvald Wodder II'
 __author_email__ = 'binheat@varonathe.org'
 __license__      = 'MIT'
@@ -247,8 +247,8 @@ class BinHeat:
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
 @click.option('-C', '--column-labels', type=click.File(),
               help='Use lines in given file as column labels')
-@click.option('-F', '--font', metavar='TTF_FILE',
-              help='Typeset text in given font')
+@click.option('-F', '--font', default='Times-Roman', show_default=True,
+              help='Typeset text in given font', metavar='NAME|TTF_FILE')
 @click.option('-f', '--font-size', type=float, default=12, show_default=True,
               help='Typeset text at given size')
 @click.option('-m', '--multiline', is_flag=True,
@@ -285,13 +285,14 @@ def main(infile, outfile, font, font_size, transpose, multiline, no_sort,
 
     Visit <https://github.com/jwodder/binheat> for more information.
     """
-    if font is not None:
+    if font in available_fonts():
+        font_name = font
+    else:
+        # Assume we've been given a path to a .ttf file
         font_name = 'CustomFont'
         ### TODO: Use the basename of the filename as the font name?  (Could
         ### that ever cause problems?)
         pdfmetrics.registerFont(TTFont(font_name, font))
-    else:
-        font_name = 'Times-Roman'
 
     bh = BinHeat()
 
@@ -325,6 +326,10 @@ def strip_read(fp):
         if line == '' or line.lstrip().startswith('#'):
             continue
         yield line
+
+def available_fonts():
+    return Canvas('').getAvailableFonts()
+    #return pdfmetrics.standardFonts
 
 if __name__ == '__main__':
     main()

@@ -15,13 +15,10 @@
 - Add more example input files
 - Should the `-m` option always be in effect?
 - Make `--no-sort` the default behavior and add a `--sort` option
-- Support specifying builtin fonts with `--font` (The available builtin fonts
-  can be listed with `Canvas(*).getAvailableFonts()`)
 - Make the margins configurable on the command line?
 - When an input filename is given but no output filename, write to the input
   filename with the extension set to `.pdf` instead of to stdout
 - Implement the drawing logic as a `reportlab.*.Flowable` subclass (or factory
   thereof?)
-- Release on PyPI
 - `--multiline` is the wrong name for the option.  Rename it.
 - Rethink how `--transpose` interacts with `-R` and `-C`

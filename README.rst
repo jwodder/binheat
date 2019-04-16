@@ -63,8 +63,9 @@ Options
   labels (or row labels if ``--transpose`` is in effect).  Any pairs in the
   input whose second column does not appear in ``<file>`` are discarded.
 
-- ``-F <ttf-file>``, ``--font <ttf-file>`` — Use the given ``.ttf`` file for
-  the text font.  By default, all text is typeset in Times-Roman.
+- ``-F <font>``, ``--font <font>`` — Typeset text in the given font.
+  ``<font>`` must be either the name of a builtin PostScript font or the path
+  to a ``.ttf`` file.  By default, text is typeset in Times-Roman.
 
 - ``-f <size>``, ``--font-size <size>`` — Set the text size to ``<size>``
   (default 12).
@@ -116,4 +117,4 @@ The following input file::
 produces (using the ``--multiline`` and ``--no-sort`` options) an output file
 that looks like this:
 
-.. image:: https://github.com/jwodder/binheat/raw/v0.1.0/examples/ctype.png
+.. image:: https://github.com/jwodder/binheat/raw/master/examples/ctype.png
