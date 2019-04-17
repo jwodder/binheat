@@ -16,8 +16,6 @@
 - Should the `-m` option always be in effect?
 - Make `--no-sort` the default behavior and add a `--sort` option
 - Make the margins configurable on the command line?
-- When an input filename is given but no output filename, write to the input
-  filename with the extension set to `.pdf` instead of to stdout
 - Implement the drawing logic as a `reportlab.*.Flowable` subclass (or factory
   thereof?)
 - `--multiline` is the wrong name for the option.  Rename it.

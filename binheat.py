@@ -27,7 +27,9 @@ __author_email__ = 'binheat@varonathe.org'
 __license__      = 'MIT'
 __url__          = 'https://github.com/jwodder/binheat'
 
+from   pathlib                   import Path
 import re
+import sys
 import click
 from   reportlab.pdfbase         import pdfmetrics
 from   reportlab.pdfbase.ttfonts import TTFont
@@ -262,7 +264,7 @@ class BinHeat:
 @click.version_option(__version__, '-V', '--version',
                       message='binheat %(version)s')
 @click.argument('infile', type=click.File(), default='-')
-@click.argument('outfile', type=click.File('wb'), default='-')
+@click.argument('outfile', type=click.File('wb'), required=False)
 def main(infile, outfile, font, font_size, transpose, multiline, no_sort,
          row_labels, column_labels):
     """
@@ -313,6 +315,13 @@ def main(infile, outfile, font, font_size, transpose, multiline, no_sort,
 
     if not no_sort:
         bh.sort_labels()
+
+    if outfile is None:
+        if infile is sys.stdin:
+            outfile_name = '-'
+        else:
+            outfile_name = str(Path(infile.name).with_suffix('.pdf'))
+        outfile = click.open_file(outfile_name, 'wb')
 
     bh.render(outfile, font_name, font_size)
 
