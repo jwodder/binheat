@@ -16,6 +16,7 @@
 `GitHub <https://github.com/jwodder/binheat>`_
 | `PyPI <https://pypi.org/project/binheat/>`_
 | `Issues <https://github.com/jwodder/binheat/issues>`_
+| `Changelog <https://github.com/jwodder/binheat/blob/master/CHANGELOG.md>`_
 
 ``binheat`` converts a description of a binary relation into a PDF image of the
 relation as a binary heat map (a.k.a. matrix display, adjacency matrix,
