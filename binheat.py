@@ -7,10 +7,8 @@ relation as a binary heat map (a.k.a. matrix display, adjacency matrix,
 comparison chart, and probably a bunch of other names as well).
 
 Each line of the input (except for blank lines and comments, which are ignored)
-must be of the form ``x<TAB>y``, denoting a pair ``(x, y)`` in the binary
-relation.  If the ``--multiline`` option is given, an input line may instead
-contain multiple tab-separated fields; ``x<TAB>a<TAB>b<TAB>c`` is then short
-for ``x<TAB>a``, ``x<TAB>b``, and ``x<TAB>c``.
+must be of the form ``x<TAB>y<TAB>z...``, denoting pairs ``(x, y)``, ``(x,
+z)``, etc. in the binary relation.
 
 In the output table, the values from the first column of each input line become
 the labels of the table's rows, and the values from the second input column
@@ -253,8 +251,6 @@ class BinHeat:
               help='Typeset text in given font', metavar='NAME|TTF_FILE')
 @click.option('-f', '--font-size', type=float, default=12, show_default=True,
               help='Typeset text at given size')
-@click.option('-m', '--multiline', is_flag=True,
-              help='Allow multiple column specifiers in a single input line')
 @click.option('-R', '--row-labels', type=click.File(),
               help='Use lines in given file as row labels')
 @click.option('-S', '--no-sort', is_flag=True,
@@ -265,8 +261,8 @@ class BinHeat:
                       message='binheat %(version)s')
 @click.argument('infile', type=click.File(), default='-')
 @click.argument('outfile', type=click.File('wb'), required=False)
-def main(infile, outfile, font, font_size, transpose, multiline, no_sort,
-         row_labels, column_labels):
+def main(infile, outfile, font, font_size, transpose, no_sort, row_labels,
+         column_labels):
     """
     Binary heat map generator
 
@@ -275,10 +271,8 @@ def main(infile, outfile, font, font_size, transpose, multiline, no_sort,
     comparison chart, and probably a bunch of other names as well).
 
     Each line of the input (except for blank lines and comments, which are
-    ignored) must be of the form ``x<TAB>y``, denoting a pair ``(x, y)`` in the
-    binary relation.  If the ``--multiline`` option is given, an input line may
-    instead contain multiple tab-separated fields; ``x<TAB>a<TAB>b<TAB>c`` is
-    then short for ``x<TAB>a``, ``x<TAB>b``, and ``x<TAB>c``.
+    ignored) must be of the form ``x<TAB>y<TAB>z...``, denoting pairs ``(x,
+    y)``, ``(x, z)``, etc. in the binary relation.
 
     In the output table, the values from the first column of each input line
     become the labels of the table's rows, and the values from the second input
@@ -307,7 +301,7 @@ def main(infile, outfile, font, font_size, transpose, multiline, no_sort,
 
     for line in strip_read(infile):
         left, *top = re.split(r'\t+', line)
-        for t in (top if multiline else top[:1]):
+        for t in top:
             if transpose:
                 bh.add_pair(t, left)
             else:

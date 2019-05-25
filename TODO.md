@@ -13,10 +13,8 @@
   file is encountered
 - Support comments at the ends of nonempty lines?
 - Add more example input files
-- Should the `-m` option always be in effect?
 - Make `--no-sort` the default behavior and add a `--sort` option
 - Make the margins configurable on the command line?
 - Implement the drawing logic as a `reportlab.*.Flowable` subclass (or factory
   thereof?)
-- `--multiline` is the wrong name for the option.  Rename it.
 - Rethink how `--transpose` interacts with `-R` and `-C`

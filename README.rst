@@ -24,10 +24,8 @@ comparison chart, and probably a bunch of other names as well; see below for an
 example).
 
 Each line of the input (except for blank lines and comments, which are ignored)
-must be of the form ``x<TAB>y``, denoting a pair ``(x, y)`` in the binary
-relation.  If the ``--multiline`` option is given, an input line may instead
-contain multiple tab-separated fields; ``x<TAB>a<TAB>b<TAB>c`` is then short
-for ``x<TAB>a``, ``x<TAB>b``, and ``x<TAB>c``.
+must be of the form ``x<TAB>y<TAB>z...``, denoting pairs ``(x, y)``, ``(x,
+z)``, etc. in the binary relation.
 
 In the output table, the values from the first column of each input line become
 the labels of the table's rows, and the values from the second input column
@@ -72,10 +70,6 @@ Options
 - ``-f <size>``, ``--font-size <size>`` — Set the text size to ``<size>``
   (default 12).
 
-- ``-m``, ``--multiline`` — ``foo<TAB>bar<TAB>baz`` (or any number of
-  tab-separated fields) will be allowed as an abbreviation for ``foo<TAB>bar``
-  followed by ``foo<TAB>baz`` etc.
-
 - ``-R <file>``, ``--row-labels <file>`` — Use the lines in ``<file>`` (after
   discarding blank lines & comments) in the order they appear as row labels (or
   column labels if ``--transpose`` is in effect).  Any pairs in the input whose
@@ -116,7 +110,6 @@ The following input file::
     {|}~<TAB>isprint<TAB>isgraph<TAB>ispunct
     DEL (0x7F)<TAB>iscntrl
 
-produces (using the ``--multiline`` and ``--no-sort`` options) an output file
-that looks like this:
+produces (using the ``--no-sort`` option) an output file that looks like this:
 
 .. image:: https://github.com/jwodder/binheat/raw/master/examples/ctype.png
