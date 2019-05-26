@@ -13,7 +13,6 @@
   file is encountered
 - Support comments at the ends of nonempty lines?
 - Add more example input files
-- Make `--no-sort` the default behavior and add a `--sort` option
 - Make the margins configurable on the command line?
 - Implement the drawing logic as a `reportlab.*.Flowable` subclass (or factory
   thereof?)

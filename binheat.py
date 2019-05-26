@@ -253,15 +253,15 @@ class BinHeat:
               help='Typeset text at given size')
 @click.option('-R', '--row-labels', type=click.File(),
               help='Use lines in given file as row labels')
-@click.option('-S', '--no-sort', is_flag=True,
-              help='Do not sort the row & column labels')
+@click.option('--sort/--no-sort', '-s/-S', 'to_sort', is_flag=True,
+              help='Sort the row & column labels')
 @click.option('-T', '--transpose', is_flag=True,
               help='Exchange rows with columns')
 @click.version_option(__version__, '-V', '--version',
                       message='binheat %(version)s')
 @click.argument('infile', type=click.File(), default='-')
 @click.argument('outfile', type=click.File('wb'), required=False)
-def main(infile, outfile, font, font_size, transpose, no_sort, row_labels,
+def main(infile, outfile, font, font_size, transpose, to_sort, row_labels,
          column_labels):
     """
     Binary heat map generator
@@ -307,7 +307,7 @@ def main(infile, outfile, font, font_size, transpose, no_sort, row_labels,
             else:
                 bh.add_pair(left, t)
 
-    if not no_sort:
+    if to_sort:
         bh.sort_labels()
 
     if outfile is None:

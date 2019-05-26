@@ -75,8 +75,9 @@ Options
   column labels if ``--transpose`` is in effect).  Any pairs in the input whose
   first column does not appear in ``<file>`` are discarded.
 
-- ``-S``, ``--no-sort`` — Labels in the output will be listed in the order in
-  which they appear in the input file rather than in lexical order
+- ``--sort/--no-sort`` — Whether to list labels in the output in lexical order
+  rather than in the order in which they appear in the input file; default:
+  ``--no-sort``
 
 - ``-T``, ``--transpose`` — The output will be transposed — i.e., the first
   column of the input will be used for the output table's column labels, and
@@ -110,6 +111,6 @@ The following input file::
     {|}~<TAB>isprint<TAB>isgraph<TAB>ispunct
     DEL (0x7F)<TAB>iscntrl
 
-produces (using the ``--no-sort`` option) an output file that looks like this:
+produces (using the default options) an output file that looks like this:
 
 .. image:: https://github.com/jwodder/binheat/raw/master/examples/ctype.png
