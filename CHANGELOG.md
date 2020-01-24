@@ -5,6 +5,7 @@ v0.2.0 (in development)
   filename with the extension set to `.pdf` instead of to stdout
 - Eliminated the `--multiline` option and made its behavior the default
 - Added a `--sort` option and made `--no-sort` the default behavior
+- Support Python 3.8
 
 v0.1.0 (2019-04-15)
 -------------------

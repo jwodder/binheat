@@ -17,3 +17,4 @@
 - Implement the drawing logic as a `reportlab.*.Flowable` subclass (or factory
   thereof?)
 - Rethink how `--transpose` interacts with `-R` and `-C`
+- Add an option for making the column headers slanted
