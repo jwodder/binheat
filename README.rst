@@ -113,4 +113,4 @@ The following input file::
 
 produces (using the default options) an output file that looks like this:
 
-.. image:: https://github.com/jwodder/binheat/raw/v0.2.0/examples/ctype.png
+.. image:: https://github.com/jwodder/binheat/raw/master/examples/ctype.png

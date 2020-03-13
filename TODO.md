@@ -17,4 +17,11 @@
 - Implement the drawing logic as a `reportlab.*.Flowable` subclass (or factory
   thereof?)
 - Rethink how `--transpose` interacts with `-R` and `-C`
-- Add an option for making the column headers slanted
+- Add an option for making the column headers slanted (Do it by default?)
+- Come up with a new unified input format that allows one to specify everything
+  about the chart's contents in a single file
+    - Include a means to specify the locations of horizontal & vertical rules
+      between rows/columns
+    - Include a means to specify various different symbols at "hot points"
+- Add a function that takes loaded input data, renders a chart, and returns a
+  `Canvas` object?  Saves a `Canvas` object to a given path?

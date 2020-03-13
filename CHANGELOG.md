@@ -1,3 +1,7 @@
+v0.3.0 (in development)
+-----------------------
+- Drop support for Python 3.4
+
 v0.2.0 (2020-01-24)
 -------------------
 - `--font` now accepts names of builtin fonts
