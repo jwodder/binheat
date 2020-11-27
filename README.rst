@@ -55,30 +55,36 @@ standard input).
 Options
 -------
 
-- ``-C <file>``, ``--column-labels <file>`` — Use the lines in ``<file>``
-  (after discarding blank lines & comments) in the order they appear as column
-  labels (or row labels if ``--transpose`` is in effect).  Any pairs in the
-  input whose second column does not appear in ``<file>`` are discarded.
+-C FILE, --column-labels FILE
+                        Use the lines in ``FILE`` (after discarding blank lines
+                        & comments) in the order they appear as column labels
+                        (or row labels if ``--transpose`` is in effect).  Any
+                        pairs in the input whose second column does not appear
+                        in ``FILE`` are discarded.
 
-- ``-F <font>``, ``--font <font>`` — Typeset text in the given font.
-  ``<font>`` must be either the name of a builtin PostScript font or the path
-  to a ``.ttf`` file.  By default, text is typeset in Times-Roman.
+-F FONT, --font FONT    Typeset text in the given font.  ``FONT`` must be
+                        either the name of a builtin PostScript font or the
+                        path to a ``.ttf`` file.  By default, text is typeset
+                        in Times-Roman.
 
-- ``-f <size>``, ``--font-size <size>`` — Set the text size to ``<size>``
-  (default 12).
+-f SIZE, --font-size SIZE
+                        Set the text size to ``SIZE`` (default 12).
 
-- ``-R <file>``, ``--row-labels <file>`` — Use the lines in ``<file>`` (after
-  discarding blank lines & comments) in the order they appear as row labels (or
-  column labels if ``--transpose`` is in effect).  Any pairs in the input whose
-  first column does not appear in ``<file>`` are discarded.
+-R FILE, --row-labels FILE
+                        Use the lines in ``FILE`` (after discarding blank lines
+                        & comments) in the order they appear as row labels (or
+                        column labels if ``--transpose`` is in effect).  Any
+                        pairs in the input whose first column does not appear
+                        in ``FILE`` are discarded.
 
-- ``--sort/--no-sort`` — Whether to list labels in the output in lexical order
-  rather than in the order in which they appear in the input file; default:
-  ``--no-sort``
+--sort, --no-sort       Whether to list labels in the output in lexical order
+                        rather than in the order in which they appear in the
+                        input file; default: ``--no-sort``
 
-- ``-T``, ``--transpose`` — The output will be transposed — i.e., the first
-  column of the input will be used for the output table's column labels, and
-  the second input column onwards will be used for the table's row labels.
+-T, --transpose         The output will be transposed — i.e., the first column
+                        of the input will be used for the output table's column
+                        labels, and the second input column onwards will be
+                        used for the table's row labels.
 
 
 Example
