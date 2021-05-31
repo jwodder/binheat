@@ -1,5 +1,5 @@
-v0.3.0 (in development)
------------------------
+v0.2.1 (2021-05-31)
+-------------------
 - Drop support for Python 3.4 and 3.5
 - Support Python 3.9
 - Support Click 8

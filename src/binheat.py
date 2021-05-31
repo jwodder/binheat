@@ -19,7 +19,7 @@ Run ``binheat --help`` or visit <https://github.com/jwodder/binheat> for more
 information.
 """
 
-__version__      = '0.3.0.dev1'
+__version__      = '0.2.1'
 __author__       = 'John Thorvald Wodder II'
 __author_email__ = 'binheat@varonathe.org'
 __license__      = 'MIT'
