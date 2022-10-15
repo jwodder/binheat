@@ -25,3 +25,7 @@
     - Include a means to specify various different symbols at "hot points"
 - Add a function that takes loaded input data, renders a chart, and returns a
   `Canvas` object?  Saves a `Canvas` object to a given path?
+- Add a `Binheat` class for containing just the row names, column names, and
+  relation members
+    - Give it a classmethod for constructing from an input file and test it
+    - Give it a method for rendering as a PDF or some other reportlab object
