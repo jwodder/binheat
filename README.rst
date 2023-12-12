@@ -1,7 +1,8 @@
-.. image:: https://www.repostatus.org/badges/latest/active.svg
-    :target: https://www.repostatus.org/#active
-    :alt: Project Status: Active — The project has reached a stable, usable
-          state and is being actively developed.
+.. image:: https://www.repostatus.org/badges/latest/unsupported.svg
+    :target: https://www.repostatus.org/#unsupported
+    :alt: Project Status: Unsupported – The project has reached a stable,
+          usable state but the author(s) have ceased all work on it. A new
+          maintainer may be desired.
 
 .. image:: https://img.shields.io/pypi/pyversions/binheat.svg
     :target: https://pypi.org/project/binheat/

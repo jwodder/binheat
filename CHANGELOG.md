@@ -1,8 +1,9 @@
-v0.3.0 (in development)
+v0.2.2 (in development)
 -----------------------
 - Support Python 3.10, 3.11, and 3.12
 - Drop support for Python 3.6
 - Migrated from setuptools to hatch
+- Declare the project unsupported going forwards
 
 v0.2.1 (2021-05-31)
 -------------------
